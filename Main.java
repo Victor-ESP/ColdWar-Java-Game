@@ -139,7 +139,7 @@ public class Main {
 		// y que los bots se creen automaticamente con nombres aleatorios
 		if (tipoPartida == 3) {
 			generarBots(equipos, numEquipos, vida, misilesIniciales);
-			
+
 		} else {
 			for (int i = 0; i < numEquipos; i++) {
 				boolean nombreValido= false;
@@ -180,24 +180,24 @@ public class Main {
 						}
 					} while (tipoPlaneta < 1 || tipoPlaneta > 6);
 					if(tipoPlaneta == 1) {
-						nuevoPlaneta = new PlanetaNormal(vida, misilesIniciales);
+						nuevoPlaneta = new PlanetaNormal();
 					}else if(tipoPlaneta == 2) {
-						nuevoPlaneta = new PlanetaRojo(vida, misilesIniciales);
+						nuevoPlaneta = new PlanetaRojo();
 					}else if(tipoPlaneta == 3) {
-						nuevoPlaneta = new PlanetaAzul(vida, misilesIniciales);
+						nuevoPlaneta = new PlanetaAzul();
 					}else if(tipoPlaneta == 4) {
-						nuevoPlaneta = new PlanetaVerde(vida, misilesIniciales);
+						nuevoPlaneta = new PlanetaVerde();
 					}else if(tipoPlaneta == 5) {
-						nuevoPlaneta = new PlanetaGigante(vida, misilesIniciales);
+						nuevoPlaneta = new PlanetaGigante();
 					}else if(tipoPlaneta == 6) {
-						nuevoPlaneta = new PlanetaEnano(vida, misilesIniciales);
+						nuevoPlaneta = new PlanetaEnano();
 					}
 				}
 				nuevoPlaneta.setNombre(nombre);
 				equipos.add(nuevoPlaneta);
 			}
 		}
-		
+
 		// Repetimos el siguiente bucle mientras queden 2 equipos vivos o más
 		while (contarVivos(equipos) >= 2) {
 			System.out.println("\n==================================");
@@ -226,7 +226,7 @@ public class Main {
 				// Si el atacante es un bot usamos el metodo atacarBots el cual contiene el funcionamiento de ataque de los bots
 				if (atacante.getNombre().endsWith(".")) {
 					eventos += atacarBots(equipos, vidaInicialRonda, ronda, atacante);
-					
+
 				} else {
 					while (atacante.getMisiles_ronda() > 0) {
 						System.out.println("\n------------------------------------------");
@@ -259,6 +259,7 @@ public class Main {
 							eventos += atacante.combate(misilesLanzar, objetivo);
 						}
 					}
+
 				}
 			}
 
@@ -287,6 +288,13 @@ public class Main {
 				break;
 			}
 			ronda++;
+			for(Planeta p: equipos) {
+				if(p.getVidas() > 0 && p instanceof PlanetaGigante) {
+					p.rellenarMisiles(ronda);
+				}else 	if(p.getVidas() > 0){
+					p.rellenarMisiles(50);
+				}
+			}
 		}
 	}
 
@@ -400,7 +408,7 @@ public class Main {
 				pos++;
 			}
 		}
-		
+
 		if (!atacante.getNombre().endsWith(".")) {
 			if (ronda == 1) {
 				System.out.println("0. Defender (BLOQUEADO EN RONDA 1)");
@@ -445,7 +453,7 @@ public class Main {
 	public static String obtenerGanador(ArrayList<Planeta> equipos) {
 		//EN caso de no haber ganador como no modificaremos el string lo inicializamos con la palabra "Nadie"
 		String ganador = "Nadie";
-		
+
 		// Buscamos cual es el equipo ganador
 		for (Planeta p : equipos) {
 			if (p.getVidas() > 0) {
@@ -488,10 +496,10 @@ public class Main {
 				"Benitocamela.", "Deboramelo.", "Elenanito.", "Elsapato.", "Inesesario.", "Lolamento.", "Marioneta.",
 				"Peregil.", "Rosamelano.", "Susanoria.", "Estelagartija.", "Romangante.", "Armandobronca.",
 				"Luzcuesta.", "Marcianoataca.", "Finisterre."));
-		
+
 		boolean nombreValido = false;
 		String nombre = "";
-		
+
 		do {
 			nombreValido = true;
 			System.out.print("Inserta el nombre de tu equipo: ");
@@ -507,18 +515,18 @@ public class Main {
 			}
 		} while (!nombreValido);
 		//Añadimos al usuario en el arraylist de equipos
-		Planeta nuevoPlaneta = new PlanetaNormal(vidaPers, misilesIniciales);
+		Planeta nuevoPlaneta = new PlanetaNormal();
 		nuevoPlaneta.setNombre(nombre);
 		equipos.add(nuevoPlaneta);
-		
+
 		//Añadimos los bots con nombres aleatorios
 		for (int i = 1; i < numEquipos; i++) {
 			nombre = "";
 			int numRandom = numAleatorio(0, nomAleatorio.size() - 1);
 			nombre = nomAleatorio.get(numRandom);
 			nomAleatorio.remove(numRandom);
-			
-			nuevoPlaneta = new PlanetaNormal(vidaPers, misilesIniciales);
+
+			nuevoPlaneta = new PlanetaNormal();
 			nuevoPlaneta.setNombre(nombre);
 			equipos.add(nuevoPlaneta);
 		}
@@ -534,7 +542,7 @@ public class Main {
 	public static int numAleatorio(int minimo, int maximo) {
 		return (int) (Math.random() * (maximo - minimo + 1)) + minimo;
 	}
-	
+
 	/**
 	 * Hace que los bots jueguen solos. Eligen a lo loco a qué enemigo atacar 
 	 * (o si se curan) y también cuántos misiles gastar en su turno.
@@ -546,12 +554,12 @@ public class Main {
 	 */
 	public static String atacarBots(ArrayList<Planeta> equipos, int[] vidaInicialRonda, int ronda, Planeta atacante) {
 		String logBot = "";
-		
+
 		while (atacante.getMisiles_ronda() > 0) {
 			Planeta[] objetivos = new Planeta[equipos.size()];
 			int opcionesDisponibles = mostrarObjetivos(atacante, equipos, objetivos, ronda, vidaInicialRonda);
 			int opcion = -1;
-			
+
 			do {
 				opcion = numAleatorio(0, opcionesDisponibles);
 				if (opcion == 0 && ronda == 1) {
@@ -569,7 +577,7 @@ public class Main {
 				logBot += atacante.combate(misilesLanzar, objetivo);
 			}
 		}
-		
+
 		return logBot;
 	}
 
@@ -577,5 +585,5 @@ public class Main {
 	 * Lee el archivo de texto donde guardamos los ganadores (ganadores_coldwar.txt)
 	 * y los muestra por pantalla como si fuera un Salón de la Fama.
 	 */
-	
+
 }
