@@ -1,4 +1,6 @@
 package Padre;
+import Interface.interfaceCurar;
+
 /**
  * Clase que hace de "ficha de personaje" para los planetas o equipos del juego. 
  * Aquí se guarda cuánta vida tienen, cuántos misiles les quedan y cómo funcionan 
@@ -12,7 +14,8 @@ package Padre;
  * @version 1.0
  * @since 1.0
  */
-public abstract class Planeta {
+
+public abstract class Planeta implements interfaceCurar {
 	// Variables
 	protected int vidas;
 	protected int vidaMaxima;
@@ -20,7 +23,10 @@ public abstract class Planeta {
 	protected int misilesRonda;
 	protected int numEquipos;
 	
-
+	public Planeta() {
+		this.vidas=200;
+		this.misilesRonda=50;
+	}
 	public Planeta(int vida, int misiles) {
 		this.vidaMaxima = vida;
 		this.vidas = vida;
@@ -117,4 +123,10 @@ public abstract class Planeta {
 	 * @return Un texto contando el salseo: cuántos impactaron, si hubo esquivas y si el ataque fue súper eficaz.
 	 */
 	public abstract String combate(int misilesLanzados, Planeta atacado);
+	
+	public void rellenarMisiles(int misiles) {
+		misilesRonda = misiles;
+	}
+	
+	
 }
