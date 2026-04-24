@@ -2,8 +2,8 @@ package Hijos;
 import Padre.Planeta;
 public class PlanetaVerde extends Planeta{
 
-	public PlanetaVerde(int vida, int misiles) {
-		super(vida, misiles);
+	public PlanetaVerde() {
+		super(200, 50);
 	}
 
 	public String combate(int misilesLanzados, Planeta atacado) {
@@ -23,27 +23,23 @@ public class PlanetaVerde extends Planeta{
 
 		// Cálculo de ventajas y desventajas (Piedra, Papel, Tijera)
 		if (atacado instanceof PlanetaAzul) { 
-			misilesLanzados *= 2;
-			atacado.setVidas(getVidas() - misilesImpactados);
-		} 	// Verde ataca a Azul
+			misilesImpactados *= 2;
+		}
 		else if (atacado instanceof PlanetaRojo) {
-			misilesLanzados /= 2;
-			atacado.setVidas(getVidas() - misilesImpactados);
-		}	// Verde ataca a Rojo
-		else {
-			atacado.setVidas(getVidas() - misilesImpactados);
-		}	// Cualquier otro
+			misilesImpactados /= 2;
+		}
+		//	 	Aplicamos el daño final al pobrecito atacado
+		atacado.setVidas(atacado.getVidas() - misilesImpactados);
 
-	// Aplicamos el daño final al pobrecito atacado
-	
-	this.misilesRonda -= misilesLanzados; // Gastamos nuestros misiles
+		this.misilesRonda -= misilesLanzados; // Gastamos nuestros misiles
+		System.out.println("ATENCION CHIVATO:::--->>"+"A "+atacado.getNombre()+" le quedan "+atacado.getVidas()+"hp" );
 
-	evento = "🚀 [" + nombre.replace('.', ' ') + "] lanzó " + misilesLanzados + " misiles a [" + atacado.getNombre().replace('.', ' ') + "]. ";
+		evento = "🚀 [" + nombre.replace('.', ' ') + "] lanzó " + misilesLanzados + " misiles a [" + atacado.getNombre().replace('.', ' ') + "]. ";
 
-	if (atacado instanceof PlanetaEnano) {
-		evento += "💨 El Enano esquivó " + (misilesLanzados-misilesImpactados) + " misiles. ";
+		if (atacado instanceof PlanetaEnano) {
+			evento += "💨 El Enano esquivó " + (misilesLanzados-misilesImpactados) + " misiles. ";
+		}
+		evento += "(- " + misilesImpactados + " HP).\n";
+		return evento;
 	}
-	evento += "(- " + misilesImpactados + " HP).\n";
-	return evento;
-}
 }
