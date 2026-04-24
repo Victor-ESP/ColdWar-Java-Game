@@ -5,6 +5,7 @@ import java.util.Scanner;
 import Hijos.PlanetaAzul;
 import Hijos.PlanetaEnano;
 import Hijos.PlanetaGigante;
+import Hijos.PlanetaJuegoPersonalizado;
 import Hijos.PlanetaNormal;
 import Hijos.PlanetaRojo;
 import Hijos.PlanetaVerde;
@@ -192,7 +193,9 @@ public class Main {
 					}else if(tipoPlaneta == 6) {
 						nuevoPlaneta = new PlanetaEnano();
 					}
-				}
+				}else if(tipoPartida == 1) {
+					nuevoPlaneta = new PlanetaJuegoPersonalizado(vida, misilesIniciales);
+				}				
 				nuevoPlaneta.setNombre(nombre);
 				equipos.add(nuevoPlaneta);
 			}
@@ -228,10 +231,10 @@ public class Main {
 					eventos += atacarBots(equipos, vidaInicialRonda, ronda, atacante);
 
 				} else {
-					while (atacante.getMisiles_ronda() > 0) {
+					while (atacante.getMisilesRonda() > 0) {
 						System.out.println("\n------------------------------------------");
 						System.out.println("Turno de: " + atacante.getNombre() + " (" + vidaInicialRonda[i] + " HP)");
-						System.out.println("Misiles disponibles: " + atacante.getMisiles_ronda());
+						System.out.println("Misiles disponibles: " + atacante.getMisilesRonda());
 						System.out.println("------------------------------------------");
 
 						Planeta[] objetivos = new Planeta[equipos.size()];
@@ -250,11 +253,11 @@ public class Main {
 
 						if (opcion == 0) {
 							System.out.print("¿Cuántos misiles vas a usar para defenderte?: ");
-							int misilesDefensa = pedirMisilesValidos(atacante.getMisiles_ronda());
+							int misilesDefensa = pedirMisilesValidos(atacante.getMisilesRonda());
 							eventos += atacante.curar(misilesDefensa);
 						} else {
 							System.out.print("¿Cuántos misiles vas a lanzar?: ");
-							int misilesLanzar = pedirMisilesValidos(atacante.getMisiles_ronda());
+							int misilesLanzar = pedirMisilesValidos(atacante.getMisilesRonda());
 							Planeta objetivo = objetivos[opcion - 1];
 							eventos += atacante.combate(misilesLanzar, objetivo);
 						}
@@ -373,8 +376,7 @@ public class Main {
 			if (p.getVidas() > 0) {
 				// En caso de haber elegido la partida normal tambien mostramos los tipos de planetas seleccionados por cada equipo
 				if (tipoPartida == 2) {
-					System.out.println(
-							"[+] " + p.getNombre().replace('.', ' ') + "----> " + p.getVidas() + " HP");
+					System.out.println("[+] " + p.getNombre().replace('.', ' ') + "----> " + p.getVidas() + " HP");
 				} else {
 					System.out.println("[+] " + p.getNombre().replace('.', ' ') + " ---> " + p.getVidas() + " HP");
 				}
@@ -450,7 +452,7 @@ public class Main {
 	 * * @param equipos La lista de equipos cuando la partida ya ha acabado.
 	 * @return El nombre del ganador o "Nadie" si ha habido un empate raro.
 	 */
-	public static String obtenerGanador(ArrayList<Planeta> equipos) {
+	public static String obtenerGanador(ArrayList<Planeta> equipos){
 		//EN caso de no haber ganador como no modificaremos el string lo inicializamos con la palabra "Nadie"
 		String ganador = "Nadie";
 
@@ -515,7 +517,7 @@ public class Main {
 			}
 		} while (!nombreValido);
 		//Añadimos al usuario en el arraylist de equipos
-		Planeta nuevoPlaneta = new PlanetaNormal();
+		Planeta nuevoPlaneta = new PlanetaJuegoPersonalizado(vidaPers, misilesIniciales);
 		nuevoPlaneta.setNombre(nombre);
 		equipos.add(nuevoPlaneta);
 
@@ -526,7 +528,7 @@ public class Main {
 			nombre = nomAleatorio.get(numRandom);
 			nomAleatorio.remove(numRandom);
 
-			nuevoPlaneta = new PlanetaNormal();
+			nuevoPlaneta = new PlanetaJuegoPersonalizado(vidaPers, misilesIniciales);
 			nuevoPlaneta.setNombre(nombre);
 			equipos.add(nuevoPlaneta);
 		}
@@ -554,12 +556,10 @@ public class Main {
 	 */
 	public static String atacarBots(ArrayList<Planeta> equipos, int[] vidaInicialRonda, int ronda, Planeta atacante) {
 		String logBot = "";
-
-		while (atacante.getMisiles_ronda() > 0) {
+		while (atacante.getMisilesRonda() > 0) {
 			Planeta[] objetivos = new Planeta[equipos.size()];
 			int opcionesDisponibles = mostrarObjetivos(atacante, equipos, objetivos, ronda, vidaInicialRonda);
 			int opcion = -1;
-
 			do {
 				opcion = numAleatorio(0, opcionesDisponibles);
 				if (opcion == 0 && ronda == 1) {
@@ -569,15 +569,14 @@ public class Main {
 
 			if (opcion == 0) {
 
-				int misilesDefensa = numAleatorio(1, atacante.getMisiles_ronda());
+				int misilesDefensa = numAleatorio(1, atacante.getMisilesRonda());
 				logBot += atacante.curar(misilesDefensa);
 			} else {
-				int misilesLanzar = numAleatorio(1, atacante.getMisiles_ronda());
+				int misilesLanzar = numAleatorio(1, atacante.getMisilesRonda());
 				Planeta objetivo = objetivos[opcion - 1];
 				logBot += atacante.combate(misilesLanzar, objetivo);
 			}
 		}
-
 		return logBot;
 	}
 
