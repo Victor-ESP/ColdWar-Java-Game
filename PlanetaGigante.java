@@ -1,14 +1,12 @@
 package Hijos;
 import Padre.Planeta;
 public class PlanetaGigante extends Planeta {
-	
-	public PlanetaGigante(int vidas, int misilesRonda) {
-		super(vidas, misilesRonda);
-		this.vidas = 400;
-		this.misilesRonda = 10;
+
+	public PlanetaGigante() {
+		super(400,10);
 	}
-	public int calcularMisilesTurno(int misiles, int ronda) {
-		return 10 * ronda;
+	public void rellenarMisiles(int ronda) {
+		misilesRonda =  10 * ronda;
 	}
 	public String combate(int misilesLanzados, Planeta atacado) {
 		int misilesImpactados = 0;
@@ -24,10 +22,11 @@ public class PlanetaGigante extends Planeta {
 		} else {
 			misilesImpactados = misilesLanzados;
 		}
-		
+
 		// Aplicamos el daño final al pobrecito atacado
-		atacado.setVidas(getVidas() - misilesImpactados);
+		atacado.setVidas(atacado.getVidas() - misilesImpactados);
 		this.misilesRonda -= misilesLanzados; // Gastamos nuestros misiles
+		System.out.println("ATENCION CHIVATO:::--->>"+"A "+atacado.getNombre()+" le quedan "+atacado.getVidas()+"hp" );
 
 		evento = "🚀 [" + nombre.replace('.', ' ') + "] lanzó " + misilesLanzados + " misiles a [" + atacado.getNombre().replace('.', ' ') + "]. ";
 
@@ -37,8 +36,4 @@ public class PlanetaGigante extends Planeta {
 		evento += "(- " + misilesImpactados + " HP).\n";
 		return evento;
 	}
-
-
-
-
 }
