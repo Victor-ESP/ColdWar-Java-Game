@@ -2,8 +2,8 @@ package Hijos;
 import Padre.Planeta;
 public class PlanetaNormal extends Planeta {
 
-	public PlanetaNormal(int vidas, int misilesRonda) {
-		super(vidas, misilesRonda);
+	public PlanetaNormal() {
+		super(200,50);
 	}
 	public String combate(int misilesLanzados, Planeta atacado) {
 		int misilesImpactados = 0;
@@ -19,10 +19,12 @@ public class PlanetaNormal extends Planeta {
 		} else {
 			misilesImpactados = misilesLanzados;
 		}
-		
+
 		// Aplicamos el daño final al pobrecito atacado
-		
+
 		this.misilesRonda -= misilesLanzados; // Gastamos nuestros misiles
+		atacado.setVidas(atacado.getVidas() - misilesImpactados);
+		System.out.println("ATENCION CHIVATO:::--->>"+"A "+atacado.getNombre()+" le quedan "+atacado.getVidas()+"hp" );
 
 		evento = "🚀 [" + nombre.replace('.', ' ') + "] lanzó " + misilesLanzados + " misiles a [" + atacado.getNombre().replace('.', ' ') + "]. ";
 
