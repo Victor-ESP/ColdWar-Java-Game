@@ -22,8 +22,9 @@ public abstract class Planeta implements interfaceCurar {
 	protected String nombre;
 	protected int misilesRonda;
 	protected int numEquipos;
-	
+
 	public Planeta() {
+		this.vidaMaxima=200;
 		this.vidas=200;
 		this.misilesRonda=50;
 	}
@@ -63,7 +64,7 @@ public abstract class Planeta implements interfaceCurar {
 	 * Te dice cuántos misiles tiene listos para disparar (o curarse) en este turno.
 	 * @return Los misiles que le sobran.
 	 */
-	public int getMisiles_ronda() { return misilesRonda; }
+	public int getMisilesRonda() { return misilesRonda; }
 
 	/**
 	 * Actualiza los misiles que tiene el planeta en la recámara.
@@ -84,15 +85,6 @@ public abstract class Planeta implements interfaceCurar {
 	public void setNumEquipos(int numEquipos) { this.numEquipos = numEquipos; }
 
 	/**
-	 * Calcula cuántos misiles te tocan en este turno. Si eres un planeta Gigante (tipo 5), 
-	 * cada ronda que pasa te dan más misiles para compensar que empiezas con poquitos.
-	 * @param baseMisiles Los misiles que se reparten normalmente a todo el mundo.
-	 * @param ronda       La ronda en la que estamos.
-	 * @return Los misiles que finalmente puedes usar en este turno.
-	 */
-
-
-	/**
 	 * Gasta tus misiles para curarte en vez de atacar. Por cada 2 misiles que gastes, 
 	 * recuperas 1 punto de vida. Además, el método vigila que no te cures por encima de tu tope de vida.
 	 * @param cantidad Los misiles que vas a sacrificar para curarte.
@@ -102,7 +94,7 @@ public abstract class Planeta implements interfaceCurar {
 		String atacante = this.nombre.replace('.', ' ');		
 		// Sumamos la curación
 		this.vidas += cantidad / 2;
-		
+
 		// Evitamos que la vida actual supere el límite de vida máxima del planeta
 		if (this.vidas > this.vidaMaxima) {
 			this.vidas = this.vidaMaxima;
@@ -123,10 +115,7 @@ public abstract class Planeta implements interfaceCurar {
 	 * @return Un texto contando el salseo: cuántos impactaron, si hubo esquivas y si el ataque fue súper eficaz.
 	 */
 	public abstract String combate(int misilesLanzados, Planeta atacado);
-	
 	public void rellenarMisiles(int misiles) {
 		misilesRonda = misiles;
 	}
-	
-	
 }
