@@ -22,6 +22,7 @@ public abstract class Planeta implements interfaceCurar {
 	protected String nombre;
 	protected int misilesRonda;
 	protected int numEquipos;
+	protected String id;
 
 	public Planeta() {
 		this.vidaMaxima=200;
@@ -115,7 +116,17 @@ public abstract class Planeta implements interfaceCurar {
 	 * @return Un texto contando el salseo: cuántos impactaron, si hubo esquivas y si el ataque fue súper eficaz.
 	 */
 	public abstract String combate(int misilesLanzados, Planeta atacado);
+
 	public void rellenarMisiles(int misiles) {
 		misilesRonda = misiles;
 	}
+	public void setId(String id) {
+		this.id=id;
+	}
+	
+	public String getId(){
+		return id;
+	}
+
+
 }
