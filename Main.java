@@ -10,6 +10,7 @@ import Hijos.PlanetaNormal;
 import Hijos.PlanetaRojo;
 import Hijos.PlanetaVerde;
 import Padre.Planeta;
+import coldWar_Utils.CrearId;
 
 /**
  * Clase principal donde arranca el juego Coldwar. Aquí está el menú, 
@@ -20,7 +21,7 @@ import Padre.Planeta;
  * @author Óscar Rama Blanco
  * @author Gabriela Salazar Franco
  * @author Fabián Sanchez Rodriguez
- * @version 1.0
+ * @version 3.0
  * @since 1.0
  */
 public class Main {
@@ -197,6 +198,8 @@ public class Main {
 					nuevoPlaneta = new PlanetaJuegoPersonalizado(vida, misilesIniciales);
 				}				
 				nuevoPlaneta.setNombre(nombre);
+				@SuppressWarnings("unused")
+				String id = CrearId.crearIdManual(e);
 				equipos.add(nuevoPlaneta);
 			}
 		}
@@ -530,6 +533,8 @@ public class Main {
 
 			nuevoPlaneta = new PlanetaJuegoPersonalizado(vidaPers, misilesIniciales);
 			nuevoPlaneta.setNombre(nombre);
+			String idBot = CrearId.crearIdBot();
+			nuevoPlaneta.setId(idBot);
 			equipos.add(nuevoPlaneta);
 		}
 	}
