@@ -24,7 +24,6 @@ public class PlanetaNormal extends Planeta {
 
 		this.misilesRonda -= misilesLanzados; // Gastamos nuestros misiles
 		atacado.setVidas(atacado.getVidas() - misilesImpactados);
-		System.out.println("ATENCION CHIVATO:::--->>"+"A "+atacado.getNombre()+" le quedan "+atacado.getVidas()+"hp" );
 
 		evento = "🚀 [" + nombre.replace('.', ' ') + "] lanzó " + misilesLanzados + " misiles a [" + atacado.getNombre().replace('.', ' ') + "]. ";
 
