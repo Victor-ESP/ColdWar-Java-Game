@@ -17,7 +17,7 @@ Este proyecto se ha centrado en aplicar conceptos avanzados de **Programación O
 ## 🕹️ Cómo ejecutar el juego
 * **1-Clona el repositorio.**
 * **2-Abre el proyecto en tu IDE preferido (VS Code / Eclipse / IntelliJ).**
-* **3-Ejecuta la clase Main.java (o la que lance el juego).**
+* **3-Ejecuta la clase Main.java**
 
 ## 👥 Colaboradores
 * Víctor Mosquera Puchades
