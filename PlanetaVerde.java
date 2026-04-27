@@ -32,7 +32,6 @@ public class PlanetaVerde extends Planeta{
 		atacado.setVidas(atacado.getVidas() - misilesImpactados);
 
 		this.misilesRonda -= misilesLanzados; // Gastamos nuestros misiles
-		System.out.println("ATENCION CHIVATO:::--->>"+"A "+atacado.getNombre()+" le quedan "+atacado.getVidas()+"hp" );
 
 		evento = "🚀 [" + nombre.replace('.', ' ') + "] lanzó " + misilesLanzados + " misiles a [" + atacado.getNombre().replace('.', ' ') + "]. ";
 
